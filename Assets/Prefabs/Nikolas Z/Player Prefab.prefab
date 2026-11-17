@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerScript
   _topSpeed: 5
-  _accel: 1000
+  _accel: 750
   _jumpHeight: 0
   _boxOffset: {x: 0, y: -0.28}
   _boxSize: {x: 0.94, y: 0.07}
@@ -289,7 +289,7 @@ PolygonCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

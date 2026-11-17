@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+[RequireComponent(typeof(LineRenderer))]
+
 public class PickUpScript : MonoBehaviour
 {
 
@@ -13,6 +16,12 @@ public class PickUpScript : MonoBehaviour
 
     public float heldLinearDamping;
 
+
+
+    public Color normalLineColor;
+    public Color maxStretchLineColor;
+
+
     public LayerMask targetLayer;
 
 
@@ -23,7 +32,7 @@ public class PickUpScript : MonoBehaviour
     private float originalLinearDamping;
     private float originalGravityScale;
 
-    
+    private LineRenderer lineRenderer;
 
 
 
@@ -70,6 +79,12 @@ public class PickUpScript : MonoBehaviour
         }
     }
 
+
+    private void LateUpdate()
+    {
+        updateVisualLine();
+    }
+
     private void tryGrabObject()
     {
         Vector2 MouseWorldPos = GetMouseWorldPosition();
@@ -93,6 +108,12 @@ public class PickUpScript : MonoBehaviour
             grabbedRb.linearDamping = heldLinearDamping;
             grabbedRb.gravityScale = 0f;
             grabbedRb.linearVelocity = Vector2.zero;
+        }
+
+        if(anchorPoint != null)
+        {
+            lineRenderer.enabled = true;
+            updateVisualLine();
         }
 
     }
@@ -125,6 +146,34 @@ public class PickUpScript : MonoBehaviour
         grabbedRb.MovePosition(smoothedPosition);
     }
 
+    //FIX
+    private void updateVisualLine()
+    {
+        if (grabbedRb == null || anchorPoint == null) return;
+
+        Vector3 startPos = anchorPoint.position;
+        Vector3 endPos = grabbedRb.transform.position;
+
+
+        startPos.z = 0f;
+        endPos.z = 0f;
+
+        lineRenderer.SetPosition(0, startPos);
+        lineRenderer.SetPosition(1, endPos);
+
+
+        float stretchRaito = Vector2.Distance(anchorPoint.position, grabbedRb.position) / maxRadius;
+        Color currentColor = Color.Lerp(normalLineColor, maxStretchLineColor, stretchRaito);
+        lineRenderer.startColor = currentColor;
+        lineRenderer.endColor = currentColor;
+
+
+
+    }
+
+
+
+
 
     private void ReleaseObj()
     {
@@ -134,6 +183,9 @@ public class PickUpScript : MonoBehaviour
             grabbedRb.gravityScale = originalGravityScale;
             grabbedRb = null;
         }
+
+
+        lineRenderer.enabled = false;
     }
 
 

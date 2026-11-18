@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7237541320284148711}
   m_Layer: 0
   m_Name: Player Prefab
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -142,7 +142,7 @@ MonoBehaviour:
   _boxSize: {x: 0.94, y: 0.07}
   _boxLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 0
 --- !u!114 &5167969497810991515
 MonoBehaviour:
   m_ObjectHideFlags: 0

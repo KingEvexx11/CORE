@@ -11,19 +11,23 @@ public class PickUpScript : MonoBehaviour
     public float maxRadius;
 
 
-    [Range(1f, 25f)]
+    [Header("Following speed/Drag")]
+    [Range(1f, 15f)]
     public float followspeed;
 
     public float heldLinearDamping;
 
 
-
+    [Header("Colors")]
     public Color normalLineColor;
     public Color maxStretchLineColor;
 
 
+
+    [Header("Layer(s)")]
     public LayerMask targetLayer;
 
+    
 
     private Camera mainCamera;
     private Rigidbody2D grabbedRb;
@@ -43,6 +47,16 @@ public class PickUpScript : MonoBehaviour
     private void Awake()
     {
         mainCamera = Camera.main;
+
+
+        if(!TryGetComponent(out lineRenderer))
+        {
+            lineRenderer = gameObject.AddComponent<LineRenderer>();
+        }
+
+        lineRenderer.positionCount = 2;
+        lineRenderer.useWorldSpace = true;
+        lineRenderer.enabled = false;
     }
 
 
@@ -85,6 +99,10 @@ public class PickUpScript : MonoBehaviour
         updateVisualLine();
     }
 
+
+
+    // Checks to see if the object can be grabbed
+    // PreCondition: Object must have the same target layer
     private void tryGrabObject()
     {
         Vector2 MouseWorldPos = GetMouseWorldPosition();
@@ -110,7 +128,10 @@ public class PickUpScript : MonoBehaviour
             grabbedRb.linearVelocity = Vector2.zero;
         }
 
-        if(anchorPoint != null)
+
+
+
+        if (anchorPoint != null)
         {
             lineRenderer.enabled = true;
             updateVisualLine();
@@ -119,7 +140,7 @@ public class PickUpScript : MonoBehaviour
     }
 
 
-
+    // Allows for the player to move the object
     private void MoveGrabbedObject()
     {
         Vector2 MouseWorldPos = GetMouseWorldPosition();
@@ -146,23 +167,38 @@ public class PickUpScript : MonoBehaviour
         grabbedRb.MovePosition(smoothedPosition);
     }
 
-    //FIX
+    // Draws a visual line that connects to the player and the grabbed object 
     private void updateVisualLine()
     {
-        if (grabbedRb == null || anchorPoint == null) return;
+        if (lineRenderer == null) return;
+
+
+        if(grabbedRb == null || anchorPoint == null)
+        {
+            lineRenderer.enabled = false;
+            return;
+        }
+
+
+        lineRenderer.enabled = true;
 
         Vector3 startPos = anchorPoint.position;
         Vector3 endPos = grabbedRb.transform.position;
-
-
         startPos.z = 0f;
         endPos.z = 0f;
+            
 
         lineRenderer.SetPosition(0, startPos);
         lineRenderer.SetPosition(1, endPos);
 
 
-        float stretchRaito = Vector2.Distance(anchorPoint.position, grabbedRb.position) / maxRadius;
+
+
+
+        float stretchRaito = maxRadius > 0f
+            ? Vector2.Distance(anchorPoint.position, grabbedRb.position) / maxRadius
+            : 0f;
+
         Color currentColor = Color.Lerp(normalLineColor, maxStretchLineColor, stretchRaito);
         lineRenderer.startColor = currentColor;
         lineRenderer.endColor = currentColor;
@@ -172,12 +208,10 @@ public class PickUpScript : MonoBehaviour
     }
 
 
-
-
-
+    // Releases the grabbed object from the player
     private void ReleaseObj()
     {
-        if(grabbedRb != null)
+        if (grabbedRb != null)
         {
             grabbedRb.linearDamping = originalLinearDamping;
             grabbedRb.gravityScale = originalGravityScale;
@@ -190,19 +224,7 @@ public class PickUpScript : MonoBehaviour
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // Gets the mouse's Position within the game, to check and see if the mouse is hovering over a grabbable object
     private Vector2 GetMouseWorldPosition()
     {
         Vector2 mouseScreenPos = Mouse.current.position.ReadValue();

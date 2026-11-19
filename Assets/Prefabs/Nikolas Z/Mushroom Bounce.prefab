@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5555996498307207192}
   - component: {fileID: 8201361969539193998}
   - component: {fileID: 3432365970508536278}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Square (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ PolygonCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 1778798019599169525}
   - component: {fileID: 8223243905284140209}
   - component: {fileID: 570482580108071477}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -270,7 +270,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -313,7 +313,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6382900705335923917}
   - component: {fileID: 5575728721452511579}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Mushroom Bounce
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -376,7 +376,7 @@ GameObject:
   - component: {fileID: 4077705740817072612}
   - component: {fileID: 1454575281056287760}
   - component: {fileID: 7037880275129751842}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -471,7 +471,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0

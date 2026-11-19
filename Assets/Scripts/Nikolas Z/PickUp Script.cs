@@ -114,6 +114,8 @@ public class PickUpScript : MonoBehaviour
 
         Collider2D hitCollider = Physics2D.OverlapPoint(MouseWorldPos, targetLayer);
 
+
+        // "Is the object grabbable?"
         if(hitCollider != null && hitCollider.attachedRigidbody != null)
         {
             grabbedRb = hitCollider.attachedRigidbody;

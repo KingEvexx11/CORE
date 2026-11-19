@@ -47,8 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PickUpScript
   anchorPoint: {fileID: 59034494404338681}
   maxRadius: 3.5
-  followspeed: 2
-  heldLinearDamping: 25
+  followSpeed: 1.45
+  heldLinearDamping: 45
   normalLineColor: {r: 0.05098039, g: 0.623051, b: 1, a: 0.9372549}
   maxStretchLineColor: {r: 0.20392156, g: 1, b: 0.96183115, a: 0.6509804}
   targetLayer:
@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 5531803031135789018}
   - component: {fileID: 5167969497810991515}
   - component: {fileID: 7237541320284148711}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player Prefab
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -248,7 +248,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
   m_Color: {r: 0.4528302, g: 0.4528302, b: 0.4528302, a: 1}
@@ -273,7 +273,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1.25
+  m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 2.5
   m_GravityScale: 1
@@ -301,13 +301,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerScript
   _topSpeed: 5
-  _accel: 850
+  _accel: 650
   _jumpHeight: 0
   _boxOffset: {x: 0, y: -0.28}
   _boxSize: {x: 0.94, y: 0.07}
   _boxLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
+  rotationSpeed: 10
+  spriteTransform: {fileID: 59034494404338681}
 --- !u!114 &5167969497810991515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -470,7 +472,7 @@ PolygonCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 320
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

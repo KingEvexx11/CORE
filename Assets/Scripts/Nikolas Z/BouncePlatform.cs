@@ -10,7 +10,7 @@ public class BouncePlatform : MonoBehaviour
         Rigidbody2D otherRb = collision.gameObject.GetComponent<Rigidbody2D>();
 
 
-        if (otherRb != null)
+        if (otherRb != null && otherRb.gravityScale != 0)
         {
             otherRb.linearVelocity = new Vector2(otherRb.linearVelocity.x, 0f);
 

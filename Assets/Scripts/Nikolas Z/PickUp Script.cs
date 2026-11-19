@@ -13,9 +13,10 @@ public class PickUpScript : MonoBehaviour
 
     [Header("Following speed/Drag")]
     [Range(1f, 15f)]
-    public float followspeed;
+    public float followSpeed;
 
     public float heldLinearDamping;
+    
 
 
     [Header("Colors")]
@@ -34,11 +35,12 @@ public class PickUpScript : MonoBehaviour
     private Vector2 graboffset;
 
     private float originalLinearDamping;
+    private float originalMass;
     private float originalGravityScale;
 
     private LineRenderer lineRenderer;
 
-
+    private float heldMass = 0.0001f;
 
 
 
@@ -124,8 +126,15 @@ public class PickUpScript : MonoBehaviour
 
             originalLinearDamping = grabbedRb.linearDamping;
             originalGravityScale = grabbedRb.gravityScale;
+            originalMass = grabbedRb.mass;
 
             grabbedRb.linearDamping = heldLinearDamping;
+
+            if(grabbedRb.gameObject.layer != LayerMask.NameToLayer("Interactable Hinge"))
+            {
+                grabbedRb.mass = heldMass;
+            }
+            
             grabbedRb.gravityScale = 0f;
             grabbedRb.linearVelocity = Vector2.zero;
         }
@@ -161,7 +170,7 @@ public class PickUpScript : MonoBehaviour
         Vector2 smoothedPosition = Vector2.Lerp(
             grabbedRb.position,
             targetPosition,
-            followspeed * Time.fixedDeltaTime
+            followSpeed * Time.fixedDeltaTime
         );
 
 
@@ -217,6 +226,7 @@ public class PickUpScript : MonoBehaviour
         {
             grabbedRb.linearDamping = originalLinearDamping;
             grabbedRb.gravityScale = originalGravityScale;
+            grabbedRb.mass = originalMass;
             grabbedRb = null;
         }
 

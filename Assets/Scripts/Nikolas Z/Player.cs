@@ -21,9 +21,11 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private Vector2 _boxSize;
     [SerializeField] private LayerMask _boxLayer;
 
-
+    [Header("Alignment Settings/References")]
+    [Tooltip("How fast the player rotates when transitioning to a slope")]
     [SerializeField] private float rotationSpeed;
 
+    [Tooltip("The Player's target Sprite to be used for aligning with the ground")]
     [SerializeField] private Transform spriteTransform;
 
 
@@ -56,6 +58,8 @@ public class PlayerScript : MonoBehaviour
 
         if(hit.collider != null)
         {
+
+            // rotates the player on the Z-axis to match with the floor (Z = Z axis value of the floor)
             float targetAngle = Mathf.Atan2(hit.normal.y, hit.normal.x) * Mathf.Rad2Deg - 90f;
 
             Quaternion targetRotation = Quaternion.Euler(0f, 0f, targetAngle);
@@ -63,6 +67,7 @@ public class PlayerScript : MonoBehaviour
         }
         else
         {
+            // reset back to original orientation if the floor is flat or while in the air (Z = 0)
             Quaternion flatRotation = Quaternion.Euler(0f, 0f, 0f);
             spriteTransform.rotation = Quaternion.Lerp(spriteTransform.rotation, flatRotation, rotationSpeed * Time.deltaTime);
         }

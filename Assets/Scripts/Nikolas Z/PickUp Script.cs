@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+[RequireComponent(typeof(LineRenderer))]
+
 public class PickUpScript : MonoBehaviour
 {
 
@@ -8,24 +11,36 @@ public class PickUpScript : MonoBehaviour
     public float maxRadius;
 
 
-    [Range(1f, 25f)]
-    public float followspeed;
+    [Header("Following speed/Drag")]
+    [Range(1f, 15f)]
+    public float followSpeed;
 
     public float heldLinearDamping;
+    
 
+
+    [Header("Colors")]
+    public Color normalLineColor;
+    public Color maxStretchLineColor;
+
+
+
+    [Header("Layer(s)")]
     public LayerMask targetLayer;
 
+    
 
     private Camera mainCamera;
     private Rigidbody2D grabbedRb;
     private Vector2 graboffset;
 
     private float originalLinearDamping;
+    private float originalMass;
     private float originalGravityScale;
 
-    
+    private LineRenderer lineRenderer;
 
-
+    private float heldMass = 0.0001f;
 
 
 
@@ -34,6 +49,16 @@ public class PickUpScript : MonoBehaviour
     private void Awake()
     {
         mainCamera = Camera.main;
+
+
+        if(!TryGetComponent(out lineRenderer))
+        {
+            lineRenderer = gameObject.AddComponent<LineRenderer>();
+        }
+
+        lineRenderer.positionCount = 2;
+        lineRenderer.useWorldSpace = true;
+        lineRenderer.enabled = false;
     }
 
 
@@ -70,6 +95,16 @@ public class PickUpScript : MonoBehaviour
         }
     }
 
+
+    private void LateUpdate()
+    {
+        updateVisualLine();
+    }
+
+
+
+    // Checks to see if the object can be grabbed
+    // PreCondition: Object must have the same target layer
     private void tryGrabObject()
     {
         Vector2 MouseWorldPos = GetMouseWorldPosition();
@@ -81,6 +116,8 @@ public class PickUpScript : MonoBehaviour
 
         Collider2D hitCollider = Physics2D.OverlapPoint(MouseWorldPos, targetLayer);
 
+
+        // "Is the object grabbable?"
         if(hitCollider != null && hitCollider.attachedRigidbody != null)
         {
             grabbedRb = hitCollider.attachedRigidbody;
@@ -89,16 +126,32 @@ public class PickUpScript : MonoBehaviour
 
             originalLinearDamping = grabbedRb.linearDamping;
             originalGravityScale = grabbedRb.gravityScale;
+            originalMass = grabbedRb.mass;
 
             grabbedRb.linearDamping = heldLinearDamping;
+
+            if(grabbedRb.gameObject.layer != LayerMask.NameToLayer("Interactable Hinge"))
+            {
+                grabbedRb.mass = heldMass;
+            }
+            
             grabbedRb.gravityScale = 0f;
             grabbedRb.linearVelocity = Vector2.zero;
+        }
+
+
+
+
+        if (anchorPoint != null)
+        {
+            lineRenderer.enabled = true;
+            updateVisualLine();
         }
 
     }
 
 
-
+    // Allows for the player to move the object
     private void MoveGrabbedObject()
     {
         Vector2 MouseWorldPos = GetMouseWorldPosition();
@@ -117,7 +170,7 @@ public class PickUpScript : MonoBehaviour
         Vector2 smoothedPosition = Vector2.Lerp(
             grabbedRb.position,
             targetPosition,
-            followspeed * Time.fixedDeltaTime
+            followSpeed * Time.fixedDeltaTime
         );
 
 
@@ -125,32 +178,65 @@ public class PickUpScript : MonoBehaviour
         grabbedRb.MovePosition(smoothedPosition);
     }
 
+    // Draws a visual line that connects to the player and the grabbed object 
+    private void updateVisualLine()
+    {
+        if (lineRenderer == null) return;
 
+
+        if(grabbedRb == null || anchorPoint == null)
+        {
+            lineRenderer.enabled = false;
+            return;
+        }
+
+
+        lineRenderer.enabled = true;
+
+        Vector3 startPos = anchorPoint.position;
+        Vector3 endPos = grabbedRb.transform.position;
+        startPos.z = 0f;
+        endPos.z = 0f;
+            
+
+        lineRenderer.SetPosition(0, startPos);
+        lineRenderer.SetPosition(1, endPos);
+
+
+
+
+
+        float stretchRaito = maxRadius > 0f
+            ? Vector2.Distance(anchorPoint.position, grabbedRb.position) / maxRadius
+            : 0f;
+
+        Color currentColor = Color.Lerp(normalLineColor, maxStretchLineColor, stretchRaito);
+        lineRenderer.startColor = currentColor;
+        lineRenderer.endColor = currentColor;
+
+
+
+    }
+
+
+    // Releases the grabbed object from the player
     private void ReleaseObj()
     {
-        if(grabbedRb != null)
+        if (grabbedRb != null)
         {
             grabbedRb.linearDamping = originalLinearDamping;
             grabbedRb.gravityScale = originalGravityScale;
+            grabbedRb.mass = originalMass;
             grabbedRb = null;
         }
+
+
+        lineRenderer.enabled = false;
     }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // Gets the mouse's Position within the game, to check and see if the mouse is hovering over a grabbable object
     private Vector2 GetMouseWorldPosition()
     {
         Vector2 mouseScreenPos = Mouse.current.position.ReadValue();

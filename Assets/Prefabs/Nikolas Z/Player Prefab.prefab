@@ -307,7 +307,7 @@ MonoBehaviour:
   _boxSize: {x: 0.94, y: 0.07}
   _boxLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 0
   rotationSpeed: 10
   spriteTransform: {fileID: 59034494404338681}
 --- !u!114 &5167969497810991515

@@ -33,6 +33,7 @@ public class PlayerScript : MonoBehaviour
 
     private Rigidbody2D _rb;
     private SpriteRenderer sprt;
+    private Animator anim;
 
     private float _movement;
 
@@ -41,6 +42,7 @@ public class PlayerScript : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         sprt = GetComponent<SpriteRenderer>();
     }
 
@@ -52,14 +54,17 @@ public class PlayerScript : MonoBehaviour
         RaycastHit2D hit = Physics2D.BoxCast(transform.position + (Vector3)_boxOffset, _boxSize, 0, Vector2.zero, 0, _boxLayer);
 
 
+        
+
         _rb.AddForceX(_movement * _accel * Time.deltaTime);
         _rb.linearVelocityX = Mathf.Clamp(_rb.linearVelocityX, -_topSpeed, _topSpeed);
+        anim.SetFloat("Speed", _movement / 5);
 
 
-        if(hit.collider != null)
+        if (hit.collider != null)
         {
 
-            // rotates the player on the Z-axis to match with the floor (Z = Z axis value of the floor)
+            // Rotates the player on the Z-axis to match with the floor (Z = Z axis value of the floor)
             float targetAngle = Mathf.Atan2(hit.normal.y, hit.normal.x) * Mathf.Rad2Deg - 90f;
 
             Quaternion targetRotation = Quaternion.Euler(0f, 0f, targetAngle);
@@ -67,7 +72,7 @@ public class PlayerScript : MonoBehaviour
         }
         else
         {
-            // reset back to original orientation if the floor is flat or while in the air (Z = 0)
+            // Reset back to original orientation if the floor is flat or while in the air (Z = 0)
             Quaternion flatRotation = Quaternion.Euler(0f, 0f, 0f);
             spriteTransform.rotation = Quaternion.Lerp(spriteTransform.rotation, flatRotation, rotationSpeed * Time.deltaTime);
         }
@@ -95,10 +100,26 @@ public class PlayerScript : MonoBehaviour
             return;
 
         _rb.linearVelocityY = _jumpHeight;
-
+        anim.SetTrigger("Jump");
 
 
     }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        anim.SetBool("IsGrounded", true);
+    }
+
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        anim.SetBool("IsGrounded", false);
+    }
+
+
+
+
 
     private bool IsGrounded()
     {
@@ -106,6 +127,7 @@ public class PlayerScript : MonoBehaviour
 
         return hit;
     }
+
 
 
     private void OnDrawGizmos()

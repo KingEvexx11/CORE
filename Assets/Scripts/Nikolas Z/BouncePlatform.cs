@@ -11,11 +11,11 @@ public class BouncePlatform : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        Rigidbody2D parentRb = GetComponentInParent<Rigidbody2D>();
         Rigidbody2D otherRb = collision.gameObject.GetComponent<Rigidbody2D>();
 
 
-        if (otherRb != null && otherRb.gravityScale != 0)
+        if (otherRb != null && otherRb.gravityScale != 0 && parentRb.gravityScale != 0)
         {
             otherRb.linearVelocity = new Vector2(otherRb.linearVelocity.x, 0f);
 

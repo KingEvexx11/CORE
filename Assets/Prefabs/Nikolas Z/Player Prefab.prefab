@@ -46,14 +46,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickUpScript
   anchorPoint: {fileID: 59034494404338681}
-  maxRadius: 3.5
+  maxRadius: 3.75
   followSpeed: 1.45
   heldLinearDamping: 45
   normalLineColor: {r: 0.05098039, g: 0.623051, b: 1, a: 0.9372549}
   maxStretchLineColor: {r: 0.20392156, g: 1, b: 0.96183115, a: 0.6509804}
   targetLayer:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 1472
 --- !u!120 &3737440191586026350
 LineRenderer:
   serializedVersion: 3
@@ -273,7 +273,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.75
   m_LinearDamping: 0
   m_AngularDamping: 2.5
   m_GravityScale: 1
@@ -301,13 +301,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerScript
   _topSpeed: 5
-  _accel: 650
+  _accel: 850
   _jumpHeight: 0
   _boxOffset: {x: 0, y: -0.28}
-  _boxSize: {x: 0.94, y: 0.07}
+  _boxSize: {x: 1.015, y: 0.035}
   _boxLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 1032
   rotationSpeed: 10
   spriteTransform: {fileID: 59034494404338681}
 --- !u!114 &5167969497810991515
@@ -504,5 +504,5 @@ PolygonCollider2D:
     m_Paths:
     - - {x: 0, y: 0.5773587}
       - {x: -0.5, y: -0.28866667}
-      - {x: 0.5, y: -0.28866667}
+      - {x: 0.4971428, y: -0.28612506}
   m_UseDelaunayMesh: 1

@@ -174,6 +174,7 @@ GameObject:
   m_Component:
   - component: {fileID: 59034494404338681}
   - component: {fileID: 262712510953614880}
+  - component: {fileID: 4683235147824461928}
   - component: {fileID: 608021971148841694}
   - component: {fileID: 5531803031135789018}
   - component: {fileID: 5167969497810991515}
@@ -261,6 +262,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!95 &4683235147824461928
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3718991631174042269}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 292c1e0cb37dac3459f0ecf729842c2b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!50 &608021971148841694
 Rigidbody2D:
   serializedVersion: 5
@@ -300,8 +323,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c46f787053f4d594ca75e571587f5c3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerScript
-  _topSpeed: 5
-  _accel: 850
+  _topSpeed: 4.5
+  _accel: 800
   _jumpHeight: 0
   _boxOffset: {x: 0, y: -0.28}
   _boxSize: {x: 1.015, y: 0.035}

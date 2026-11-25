@@ -178,8 +178,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Start
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 56ce5fe114a96cf498022bf92c646663, type: 2}
-  m_sharedMaterial: {fileID: 4198061498439656292, guid: 56ce5fe114a96cf498022bf92c646663, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 14b448d868f391a4bb9527a5b0b57c8e, type: 2}
+  m_sharedMaterial: {fileID: 2820317961327230873, guid: 14b448d868f391a4bb9527a5b0b57c8e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -761,7 +761,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Prefab set-up
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1689486967
@@ -1053,8 +1053,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Quit
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 56ce5fe114a96cf498022bf92c646663, type: 2}
-  m_sharedMaterial: {fileID: 4198061498439656292, guid: 56ce5fe114a96cf498022bf92c646663, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 14b448d868f391a4bb9527a5b0b57c8e, type: 2}
+  m_sharedMaterial: {fileID: 2820317961327230873, guid: 14b448d868f391a4bb9527a5b0b57c8e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

@@ -17,8 +17,11 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private float _jumpHeight;
 
     [Header("Box raycast settings")]
+    [Tooltip("The raycast box offset from the player (Commonly placed at the bottom of the player)")]
     [SerializeField] private Vector2 _boxOffset;
+    [Tooltip("The size of the raycast box that can be tweaked to the player's size")]
     [SerializeField] private Vector2 _boxSize;
+    [Tooltip("The layer(s) that the player can walk on")]
     [SerializeField] private LayerMask _boxLayer;
 
     [Header("Alignment Settings/References")]
@@ -58,7 +61,7 @@ public class PlayerScript : MonoBehaviour
 
         _rb.AddForceX(_movement * _accel * Time.deltaTime);
         _rb.linearVelocityX = Mathf.Clamp(_rb.linearVelocityX, -_topSpeed, _topSpeed);
-        anim.SetFloat("Speed", _movement / 5);
+        anim.SetFloat("Speed", Mathf.Abs(_movement) / 10);
 
 
         if (hit.collider != null)

@@ -7,7 +7,10 @@ using UnityEngine.InputSystem;
 public class PickUpScript : MonoBehaviour
 {
 
+    [Header("Object Reference/Radius")]
+    [Tooltip("The main object (Most likely the player character) that piviots the grabbed object")]
     public Transform anchorPoint;
+    [Tooltip("The maximum range where the grabbed object can be away from the anchor point")]
     public float maxRadius;
 
 
@@ -26,6 +29,7 @@ public class PickUpScript : MonoBehaviour
 
 
     [Header("Layer(s)")]
+    [Tooltip("The specified layers that can be grabbed/interacted with")]
     public LayerMask targetLayer;
 
     
